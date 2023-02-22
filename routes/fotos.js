@@ -23,7 +23,7 @@ router.post('/add', async (req, res, next) => {
     descripcion
   }
   pool.query('INSERT INTO fotos SET ?', [newPub])
-  res.redirect('/')
+  res.redirect('/fotos')
 });
 
 router.get('/delete/:id', async (req, res) => {
@@ -33,6 +33,27 @@ router.get('/delete/:id', async (req, res) => {
   res.redirect('/fotos')
 })
 
+router.get('/edit/:id', async (req, res) => {
+  const { id } = req.params
+  const [ post ] = await pool.query('SELECT * FROM fotos WHERE id = ?', [ id ])
+
+  res.render('fotos/edit', { post:post[0]})
+})
+
+router.post('/edit/:id', async (req, res) => {
+  // console.log(req.body)
+  const { id } = req.params
+  const {url, titulo, descripcion} = req.body
+  const newPub = {
+    url,
+    titulo,
+    descripcion
+  }
+  // console.log(newLink)
+  await pool.query('UPDATE fotos SET ? WHERE id = ?',[newPub, id])
+
+  res.redirect('/fotos')
+})
 
 
 
