@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menos votadas</title>
+</head>
+<body>
+    <section id="menos">
+
+        {{#each desc}}
+
+                <div id="caja">
+                    <img src="{{this.url}}">
+                    <h1>{{this.titulo}}</h1>
+                    <h3>{{this.descripcion}}</h3>
+                    <h5>{{this.fecha}}</h5>
+                    <div class="info">
+                        <h3>{{this.likes}} likes</h3>
+                        <h3>{{this.dislikes}} dislikes</h3>
+                    </div>
+                </div>
+        {{/each}}
+    </section>
+</body>
+</html>

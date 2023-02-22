@@ -20,7 +20,10 @@ router.post('/add', async (req, res, next) => {
   const newPub = {
     url,
     titulo,
-    descripcion
+    descripcion,
+    likes:0,
+    dislikes:0
+
   }
   pool.query('INSERT INTO fotos SET ?', [newPub])
   res.redirect('/fotos')
@@ -47,7 +50,9 @@ router.post('/edit/:id', async (req, res) => {
   const newPub = {
     url,
     titulo,
-    descripcion
+    descripcion,
+    likes:0,
+    dislikes:0
   }
   // console.log(newLink)
   await pool.query('UPDATE fotos SET ? WHERE id = ?',[newPub, id])
@@ -55,15 +60,28 @@ router.post('/edit/:id', async (req, res) => {
   res.redirect('/fotos')
 })
 
-
-
-
-router.get('/masvotadas', function(req, res, next) {
-  res.send('/masvotadas');
+router.get('/like/:id',async (req, res, next) => {
+  const { id } = req.params
+  console.log(id)
+  await pool.query('update fotos set likes=likes+1 where id = ?;', [ id ])
+  res.redirect('/fotos')
 });
 
-router.get('/menosvotadas', function(req, res, next) {
-  res.send('/menosvotadas');
+
+router.get('/dislike/:id',async (req, res, next) => {
+  const { id } = req.params
+  await pool.query('update fotos set dislikes=dislikes+1 where id = ?;', [ id ])
+  res.redirect('/fotos')
+});
+
+router.get('/masvotadas', async(req, res, next) => {
+  const [asc] = await pool.query('select * from fotos order by likes ASC limit 1;')
+  res.render('fotos/mas', {asc});
+});
+
+router.get('/menosvotadas', async(req, res, next) => {
+  const [desc] = await pool.query('select * from fotos order by dislikes ASC limit 1;')
+  res.render('fotos/menos', {desc});
 });
 
 

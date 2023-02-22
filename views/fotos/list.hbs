@@ -15,17 +15,21 @@
                 <h1>{{this.titulo}}</h1>
                 <h3>{{this.descripcion}}</h3>
                 <h5>{{this.fecha}}</h5>
+                <div id="likes">
+                    
+                    <h3>{{this.likes}}</h3>
+                    <a href="/fotos/like/{{this.id}}">Me gusta</a> |
+                    <h3>{{this.dislikes}}</h3>
+                    <a href="/fotos/dislike/{{this.id}}">No me gusta</a>
+                </div>
                 <div id="botones">
-                    <a href="fotos/delete/{{ this.id }}"><button>Borrar</button></a>
+                    <a href="fotos/delete/{{this.id}}"><button>Borrar</button></a>
+
                     <a href="/fotos/edit/{{this.id}}"><button>Editar</button></a>
                     
                 </div>
             </div>
-            
         {{/each}}
-
     </section>
-
-    
 </body>
 </html>
