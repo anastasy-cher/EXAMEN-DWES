@@ -5,9 +5,11 @@ const pool = require('../database')
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', async (req, res, next) => {
+  const [ post ] = await pool.query('SELECT * FROM fotos')
+  console.log(post)
+  res.render('fotos/list', { post })
   
-  res.send('galeria')
 });
 
 router.get('/add', function(req, res, next) {
@@ -20,11 +22,19 @@ router.post('/add', async (req, res, next) => {
     titulo,
     descripcion
   }
-
   pool.query('INSERT INTO fotos SET ?', [newPub])
-  console.log(req.body)
-  res.send('add')
+  res.redirect('/')
 });
+
+router.get('/delete/:id', async (req, res) => {
+  // console.log(req.params.id)
+  const { id } = req.params
+  await pool.query('DELETE FROM fotos WHERE id = ?', [ id ])
+  res.redirect('/fotos')
+})
+
+
+
 
 
 router.get('/masvotadas', function(req, res, next) {
