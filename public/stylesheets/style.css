@@ -5,6 +5,7 @@
   /* border: 1px solid; */
 }
 #principal{
+  height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,8 +44,9 @@ button{
   background: #132341;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: wrap;
+  padding: 1rem;
 }
 #caja{
   padding: 1rem;
@@ -73,4 +75,18 @@ button{
   align-items: center;
   justify-content: center;
   background: #132341;
+}
+#menu{
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: #2d5152;
+}
+#menu a{
+  text-decoration: none;
+  color: #e6d7c3;
+  font-size: 30px;
+  border-bottom: 1px solid;
+
 }
