@@ -10,4 +10,4 @@ create table fotos(
     fecha timestamp not null default current_timestamp,
     likes int,
     dislikes int
-)
+);

@@ -4,11 +4,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const { engine } = require('express-handlebars')
+const smysql = require('express-mysql-session')
 
 const indexRouter = require('./routes/index');
 const fotosRouter = require('./routes/fotos');
+const { database, database_cc } = require('./keys');
+const session = require('express-session');
 
 const app = express();
+require('dotenv').config()
 
 // view engine setup
 
@@ -20,6 +24,20 @@ app.engine('.hbs', engine({
   extname: '.hbs'
 }))
 app.set('view engine', '.hbs');
+let base_utilizar;
+
+if(process.env.NODE_ENV== 'develop'){
+  base_utilizar = database
+}else{
+  base_utilizar = database_cc
+}
+
+app.use(session({
+  secret:'examen',
+  resave: false,
+  saveUninitialized: false,
+  store: new smysql(base_utilizar)
+}))
 
 app.use(logger('dev'));
 app.use(express.json());
